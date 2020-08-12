@@ -88,21 +88,24 @@ int splitsum(int x){
 
 //Luhn's Algorithm:
 bool checksum(string card){
-  long long int card_number=stoll(card);  //need to convert to long long int because the number is very big once converted
+  //long long int card_number=stoll(card);  //need to convert to long long int because the number is very big once converted
   int sum1=0;
   int sum2=0;
   int sum3;
+  int card_code;
   vector<int> v;
+  //vector<char> c(card.begin(), card.end());
+
 
   if(card.length()==16){
     for (int i=0; i < card.length(); i=i+2){ // even positions
-      v.push_back(card_number[i])*2);
+      v.push_back((int)(card[i])*2);      // in this way i convert the chars of the string into int
     }
     for(int p=0; p<v.size();p++){  // summing the content of vector v
       sum1= sum1 + splitsum(v[p]);
     }
     for(int t=1; t<card.length(); t=t+2){ //adding the sum to the sum of the digits that weren't multiplied by 2
-      sum2= sum2 + stoi(card[t]);
+      sum2= sum2 + (int)(card[t]);
     }
     sum3=sum2+sum1;
     if(sum3 % 10 ==0){
@@ -112,13 +115,13 @@ bool checksum(string card){
 
   if(card.length()==13 || card.length()==15){   //odd positions
     for (int i=1; i < card.length(); i=i+2){
-      v.push_back(stoi(card[i])*2);
+      v.push_back((int)(card[i])*2);
       }
       for(int p=0; p<v.size();p++){  // summing the content of vector v
         sum1= sum1 + splitsum(v[p]);
       }
       for(int t=0; t<card.length(); t=t+2){ //adding the sum to the sum of the digits that weren't multiplied by 2
-        sum2= sum2 + stoi(card[t]);
+        sum2= sum2 + (int)(card[t]);
       }
       sum3=sum2+sum1;
       if(sum3 % 10 ==0){
