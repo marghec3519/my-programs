@@ -96,7 +96,6 @@ bool checksum(string card){
   int sum3;
   int card_code;
   vector<int> v;
-  //vector<char> c(card.begin(), card.end());
 
 
   if(card.length()==16){
