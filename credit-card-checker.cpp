@@ -22,24 +22,26 @@ bool checksum(string d);
 
 int main(){
 string card_digits;
+cout<<"Input card number:";
 cin>>card_digits;
 
-if(card_digits.length()!=15 || card_digits.length()!=13 || card_digits.length()!=16){
-  cout<<"INVALID"<<endl;
-}
-if(checksum(card_digits)){
-    if(isAMERICAN_EXPRESS(card_digits) && card_digits.length()==15){
+if(card_digits.size()==15 || card_digits.size()==13 || card_digits.size()==16){
+  cout<<"aaa"<<endl;
+  if(checksum(card_digits)){
+
+    if(isAMERICAN_EXPRESS(card_digits) && card_digits.size()==15){
       cout<<"AMERICAN_EXPRESS"<<endl;
       }
-    if(isMASTERCARD(card_digits) && card_digits.length()==16){
+    if(isMASTERCARD(card_digits) && card_digits.size()==16){
       cout<<"MASTERCARD"<<endl;
       }
-    if(isVISA(card_digits) && (card_digits.length()==13 || card_digits.length()==16)){
+    if(isVISA(card_digits) && (card_digits.size()==13 || card_digits.size()==16)){
       cout<<"VISA"<<endl;
       }
   }
+}else{ cout<<"INVALID"<<endl;
 }
-
+}
 //FUNCTIONS:
 
 //American express start with 34 or 37
