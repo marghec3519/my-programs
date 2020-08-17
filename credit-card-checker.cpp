@@ -22,55 +22,50 @@ bool checksum(string d);
 
 int main(){
 string card_digits;
-cout<<"Input card number:";
+cout<<"Input card number: ";
 cin>>card_digits;
 
 if(card_digits.size()==15 || card_digits.size()==13 || card_digits.size()==16){
-  cout<<"aaa"<<endl;
-  if(checksum(card_digits)){
 
-    if(isAMERICAN_EXPRESS(card_digits) && card_digits.size()==15){
+  if(checksum(card_digits)){
+      cout<<"Valid: ";
+    //cout<<"line 31 here!"<<endl;
+    if(isAMERICAN_EXPRESS(card_digits) && card_digits.length()==15){
       cout<<"AMERICAN_EXPRESS"<<endl;
       }
-    if(isMASTERCARD(card_digits) && card_digits.size()==16){
+    if(isMASTERCARD(card_digits) && card_digits.length()==16){
       cout<<"MASTERCARD"<<endl;
       }
-    if(isVISA(card_digits) && (card_digits.size()==13 || card_digits.size()==16)){
+    if(isVISA(card_digits) && (card_digits.length()==13 || card_digits.length()==16)){
       cout<<"VISA"<<endl;
       }
-  }
-}else{ cout<<"INVALID"<<endl;
+  }else{cout<<"INVALID"<<endl;}
+}else{
+cout<<"INVALID"<<endl;
 }
 }
 //FUNCTIONS:
 
 //American express start with 34 or 37
 bool isAMERICAN_EXPRESS(string d){
-  if(d.substr(0,1)=="34" || d.substr(0,1)=="37"){
+  if(d[0]=='3' && (d[1]==4 || d[1]==7)){
     return true;
   }else{return false;}
 }
 
 //Mastercards start with 51,52,53,54 or 55
 bool isMASTERCARD(string d){
-  if(d.substr(0,1)=="51" || d.substr(0,1)=="52" || d.substr(0,1)=="53" || d.substr(0,1)=="54" || d.substr(0,1)=="55"){
+  if(d[0]=='5' && (d[1]==1 || d[1]==2 || d[3]==3 || d[4]==4 || d[5]==5)){
     return true;
   }else{return false;}
 }
 
 //Visas start with 4
 bool isVISA(string d){
-  if(d.substr(0)=="4"){
+  if(d[0]=='4'){
     return true;
   }else{return false;}
 }
-
-//convert string char into int char
-char conv_stringchar(string){
-    return 1;
-}
-
-
 
 //split a number and sum its digits
 int splitsum(int x){
@@ -90,43 +85,65 @@ int splitsum(int x){
 
 //Luhn's Algorithm:
 bool checksum(string card){
-  //long long int card_number=stoll(card);  //need to convert to long long int because the number is very big once converted
+
+  //string card="4003600000000014";
+
   int sum1=0;
   int sum2=0;
   int sum3;
+  int card_next;
   int card_code;
   vector<int> v;
 
+  if(card.size()==16){
+    for (int i=0; i < card.size(); i=i+2){ // even positions
+      card[i]= card[i]-48;    //in ASCII 48 is the difference between char and numbers!
+      card_next=card[i]*2;
 
-  if(card.length()==16){
-    for (int i=0; i < card.length(); i=i+2){ // even positions
-      v.push_back((int)(card[i])*2);      // in this way i convert the chars of the string into int
+      v.push_back(card_next);
+
+    //  cout<<"line 104 : "<<card[i]<<"  "<< card_next<<" ; "<<v[0]<<";"<<v[1]<<";"<<v[2]<<endl;
     }
     for(int p=0; p<v.size();p++){  // summing the content of vector v
       sum1= sum1 + splitsum(v[p]);
+      //cout<<"line 108 : "<<sum1<<endl;
     }
-    for(int t=1; t<card.length(); t=t+2){ //adding the sum to the sum of the digits that weren't multiplied by 2
-      sum2= sum2 + (int)(card[t]);
+    for(int t=1; t<card.size(); t=t+2){ //adding the sum to the sum of the digits that weren't multiplied by 2
+      card[t]= card[t]-48;
+      sum2= sum2 + card[t];
+      //cout<<"line 113 : "<<sum2<<endl;
     }
     sum3=sum2+sum1;
+    //cout<<sum3<<endl;
     if(sum3 % 10 ==0){
+    //  cout<<"true16"<<endl;
       return true;
-    }else{return false;}
+    }else{//cout<<"false16"<<endl;
+          return false;
+          }
   }
 
-  if(card.length()==13 || card.length()==15){   //odd positions
-    for (int i=1; i < card.length(); i=i+2){
-      v.push_back((int)(card[i])*2);
+  if(card.size()==13 || card.size()==15){   //odd positions
+    for (int i=1; i < card.size(); i=i+2){
+      card[i]= card[i]-48;    //in ASCII 48 is the difference between char and numbers!
+      card_next=card[i]*2;
+
+      v.push_back(card_next);
+
       }
       for(int p=0; p<v.size();p++){  // summing the content of vector v
         sum1= sum1 + splitsum(v[p]);
       }
-      for(int t=0; t<card.length(); t=t+2){ //adding the sum to the sum of the digits that weren't multiplied by 2
-        sum2= sum2 + (int)(card[t]);
+      for(int t=0; t<card.size(); t=t+2){ //adding the sum to the sum of the digits that weren't multiplied by 2
+        card[t]=card[t]-48;
+        sum2= sum2 + card[t];
       }
       sum3=sum2+sum1;
       if(sum3 % 10 ==0){
+        //cout<<"true13-15";
         return true;
-      }else{return false;}
+      }else{//cout<<"false13-15";
+            return false;
+            }
     }
   }
