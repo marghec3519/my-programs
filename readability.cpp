@@ -1,23 +1,16 @@
 #include <iostream>
 #include <string>
-#include <vector>
+#include <cmath>
 using namespace std;
 
 //IMPROVEMENT: detect double whitespaces
 
-float average_letter_number(int n_of_letters, int n_of_words);
-float average_sentence_number(int n_of_sentences, int n_of_words);
-int readability(float average_L, float average_S);
-
 int main() {
 
-char letter;
-char whitespace= ' ';
 string words;
-vector<string> text;
-int n_of_words=1;
-int n_of_letters=0;
-int n_of_sentences=0;
+float n_of_words=1;
+float n_of_letters=0;
+float n_of_sentences=0;
 
 
 while(free){
@@ -39,24 +32,16 @@ while(free){
     }
     break;
 }
+//cout<<n_of_letters<<';'<<n_of_words<<';'<<n_of_sentences<<endl;
 
-cout<<n_of_letters<<';'<<n_of_words<<';'<<n_of_sentences<<endl;
+float averL= (n_of_letters/n_of_words)*100;
+float averS= (n_of_sentences/n_of_words)*100;
+//cout<<<<averS<<';'<<averL<<endl;
+
+//Coleman-Liau index:
+float index= (0.0588*100*(n_of_letters/n_of_words))-(0.296*(n_of_sentences/n_of_words)*100)-15.8;
+
+int readability_index= round(index);
+cout<<"->> The 'Coleman-Liau readability index' of this text is : "<<readability_index<<endl;
   return 0;
-}
-
-float average_letter_number(int n_of_letters, int n_of_words){
-
-  float average_L= (n_of_letters/n_of_words)*100;
-  return average_L;
-}
-
-float average_sentence_number(int n_of_sentences, int n_of_words){
-
-  float average_S=(n_of_sentences/n_of_words)*100;
-  return average_S;
-}
-
-int readability(float average_L, float average_S){
-  int index= (0.0588*average_L)-(0.296*average_S)-15.8;
-  return index;
 }
