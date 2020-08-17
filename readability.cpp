@@ -32,13 +32,12 @@ while(free){
       n_of_sentences++;
       }
     }
-    for (int i = 0; words[i]=='\0'; i++) {
+    for (int i = 0; words[i]!='\0'; i++) {
+      if(!isspace(words[i])&&!ispunct(words[i])){
       n_of_letters++;
+      }
     }
-
-
     break;
-
 }
 
 cout<<n_of_letters<<';'<<n_of_words<<';'<<n_of_sentences<<endl;
